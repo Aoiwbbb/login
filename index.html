@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Email Login</title>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <title>LOG IN</title>
   <style>
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       padding: 0;
@@ -17,7 +16,6 @@
       align-items: center;
       min-height: 100vh;
     }
-
     .container {
       background: white;
       padding: 30px 25px;
@@ -26,14 +24,12 @@
       max-width: 360px;
       box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
     }
-
     h2 {
       text-align: center;
       color: #222CAF;
       font-size: 22px;
       margin-bottom: 20px;
     }
-
     input, button {
       width: 100%;
       padding: 14px 16px;
@@ -44,87 +40,44 @@
       text-align: center;
       margin-bottom: 20px;
     }
-
     input {
       background-color: #222CAF;
       color: #CBB26A;
     }
-
     input::placeholder {
       color: #CBB26A;
     }
-
     button {
       background-color: #000;
       color: #fff;
       cursor: pointer;
     }
-
     button:hover {
       background-color: #222;
     }
-
-    #altLoginLink {
-      color: #007bff;
-      text-decoration: underline;
+    .link-text {
+      color: #222CAF;
       text-align: center;
-      cursor: pointer;
       font-size: 14px;
     }
-
-    #message {
-      color: green;
-      text-align: center;
-      font-size: 14px;
+    .link-text a {
+      color: #222CAF;
+      text-decoration: underline;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>Email Login</h2>
+    <h2>LOG IN</h2>
 
-    <input id="email" type="email" placeholder="Enter your registered email" />
-    <button onclick="sendLoginLink()">Send Login Link</button>
+    <input type="email" placeholder="Enter your registered email" />
+    <button>Send Login Link</button>
 
-    <p id="message" style="display: none;">Please check your email for the login link.</p>
-
-    <p id="altLoginLink" onclick="goToPhoneLogin()">Don't have access to your registered email?</p>
+    <p class="link-text">
+      Don't have an account?
+      <a href="https://aoiwbbb.github.io/signup/">Sign up</a>
+    </p>
   </div>
-
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyB-3UxWDNNkaNFZJkMUV7uOSAYpX50e7Bc",
-      authDomain: "point-test-c3d92.firebaseapp.com",
-      projectId: "point-test-c3d92",
-      appId: "1:868563982238:web:e9d54148c053122a69688f"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-
-    function sendLoginLink() {
-      const email = document.getElementById('email').value.trim();
-      if (!email) return alert("Please enter your email.");
-
-      const actionCodeSettings = {
-        url: "https://aoiwbbb.github.io/email-login-success", // ← Replace with your redirect URL
-        handleCodeInApp: true
-      };
-
-      auth.sendSignInLinkToEmail(email, actionCodeSettings)
-        .then(() => {
-          window.localStorage.setItem("emailForSignIn", email);
-          document.getElementById("message").style.display = "block";
-        })
-        .catch(error => {
-          alert("Error: " + error.message);
-        });
-    }
-
-    function goToPhoneLogin() {
-      // Replace with your hosted fallback screen URL
-      window.location.href = "https://aoiwbbb.github.io/phone-login-screen.html";
-    }
-  </script>
 </body>
 </html>
