@@ -166,7 +166,6 @@
         .then(result => {
           const user = result.user;
           alert("Sign-up successful!");
-
           if (window.ReactNativeWebView) {
             window.ReactNativeWebView.postMessage(JSON.stringify({
               uid: user.uid,
