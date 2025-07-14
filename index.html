@@ -97,15 +97,15 @@
       <input id="signupPhone" type="tel" inputmode="numeric" pattern="[0-9]*" placeholder="Enter your phone number" />
       <div id="recaptcha-container-signup"></div>
       <button onclick="sendOTP('signup')">Send OTP</button>
+      <div class="link" style="margin-top: 10px;">
+        <a onclick="showSection('loginScreen')">Back to Log In</a>
+      </div>
 
       <div id="signupOtpSection" style="display:none;">
         <input id="signupOtp" type="tel" inputmode="numeric" pattern="[0-9]*" placeholder="Enter OTP" maxlength="6" />
         <button onclick="verifyOTP('signup')">Verify OTP</button>
         <div class="link">
           <a id="resendSignupOtp" onclick="resendOTP('signup')" style="display:none;">Resend OTP</a>
-        </div>
-        <div class="link" style="margin-top: 10px;">
-          <a onclick="showSection('loginScreen')">Back to Log In</a>
         </div>
       </div>
     </div>
