@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Phone Authentication</title>
+  <title>Log In</title>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
   <style>
@@ -69,38 +69,48 @@
       display: block;
     }
     .link-text {
-      color: #222CAF;
       text-align: center;
-      font-size: 14px;
-      margin-top: -10px;
+      margin-top: 6px;
+      margin-bottom: 20px;
     }
     .link-text a {
-      color: #222CAF;
+      color: #007BFF;
       text-decoration: underline;
+      font-size: 14px;
       cursor: pointer;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>Phone Authentication</h2>
+    <h2>Log In</h2>
 
-    <!-- Step 1: Enter Phone Number -->
+    <!-- Step 1: Email Login -->
     <div id="step1" class="section active">
-      <input id="phoneNumber" type="tel" inputmode="numeric" pattern="[0-9]*" placeholder="Enter your phone number" />
+      <input id="email" type="email" placeholder="Enter your email address" />
+      <button onclick="sendLoginLink()">Send Link</button>
+
+      <!-- Link to fallback -->
+      <div class="link-text" style="margin-bottom: 30px;">
+        <a onclick="goToStep2()">Don’t have access to your registered email?</a>
+      </div>
+
+      <!-- Sign Up link -->
+      <div class="link-text">
+        <a href="https://aoiwbbb.github.io/my-firebase-auth-test/">Don’t have an account? Sign up</a>
+      </div>
+    </div>
+
+    <!-- Step 2: Fallback OTP Login -->
+    <div id="step2" class="section">
+      <input id="phoneNumber" type="tel" inputmode="numeric" pattern="[0-9]*" placeholder="Enter your registered phone number" />
       <div id="recaptcha-container"></div>
       <button onclick="sendOTP()">Send OTP</button>
 
-      <!-- Back to Log In Link -->
-      <p class="link-text">
-        <a href="https://aoiwbbb.github.io/login-page/">Back to Log In</a>
-      </p>
-    </div>
-
-    <!-- Step 2: Enter OTP -->
-    <div id="step2" class="section">
-      <input id="otp" type="tel" inputmode="numeric" pattern="[0-9]*" placeholder="Enter OTP" maxlength="6" />
-      <button onclick="verifyOTP()">Verify OTP</button>
+      <!-- Back to login -->
+      <div class="link-text">
+        <a onclick="goToStep1()">Back to Log In</a>
+      </div>
     </div>
   </div>
 
@@ -108,16 +118,36 @@
     const firebaseConfig = {
       apiKey: "AIzaSyB-3UxWDNNkaNFZJkMUV7uOSAYpX50e7Bc",
       authDomain: "point-test-c3d92.firebaseapp.com",
-      databaseURL: "https://point-test-c3d92-default-rtdb.asia-southeast1.firebasedatabase.app",
       projectId: "point-test-c3d92",
-      storageBucket: "point-test-c3d92.firebasestorage.app",
+      storageBucket: "point-test-c3d92.appspot.com",
       messagingSenderId: "868563982238",
-      appId: "1:868563982238:web:e9d54148c053122a69688f",
-      measurementId: "G-FPW8433NKB"
+      appId: "1:868563982238:web:e9d54148c053122a69688f"
     };
 
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
+
+    function sendLoginLink() {
+      const email = document.getElementById('email').value;
+      if (!email) {
+        alert("Please enter your email.");
+        return;
+      }
+
+      const actionCodeSettings = {
+        url: "https://yourapp.com/postLogin", // Replace with your app's redirect URL
+        handleCodeInApp: true
+      };
+
+      auth.sendSignInLinkToEmail(email, actionCodeSettings)
+        .then(() => {
+          window.localStorage.setItem('emailForSignIn', email);
+          alert("Please check your email for the login link.");
+        })
+        .catch(error => {
+          alert("Error sending login link: " + error.message);
+        });
+    }
 
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
       size: 'normal',
@@ -150,36 +180,20 @@
         .then(result => {
           confirmationResult = result;
           alert("OTP sent to " + phone);
-          document.getElementById('step1').classList.remove('active');
-          document.getElementById('step2').classList.add('active');
         })
         .catch(error => {
           alert("Error sending OTP: " + error.message);
         });
     }
 
-    function verifyOTP() {
-      const code = document.getElementById('otp').value;
-      if (!confirmationResult) {
-        alert('Please send OTP first!');
-        return;
-      }
+    function goToStep2() {
+      document.getElementById('step1').classList.remove('active');
+      document.getElementById('step2').classList.add('active');
+    }
 
-      confirmationResult.confirm(code)
-        .then(result => {
-          const user = result.user;
-          alert("Login successful!");
-
-          if (window.ReactNativeWebView) {
-            window.ReactNativeWebView.postMessage(JSON.stringify({
-              uid: user.uid,
-              phone: user.phoneNumber
-            }));
-          }
-        })
-        .catch(error => {
-          alert("Invalid OTP: " + error.message);
-        });
+    function goToStep1() {
+      document.getElementById('step2').classList.remove('active');
+      document.getElementById('step1').classList.add('active');
     }
   </script>
 </body>
