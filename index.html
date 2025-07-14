@@ -68,17 +68,15 @@
     .section.active {
       display: block;
     }
-    /* Blue underlined link style */
-    .link-button {
-      display: block;
-      margin-top: 10px;
-      margin-bottom: 20px;
-      color: #222CAF;
-      text-decoration: underline;
-      font-weight: bold;
-      cursor: pointer;
+    .link {
       text-align: center;
+      margin-top: -10px;
+    }
+    .link a {
+      color: #007BFF;
+      text-decoration: underline;
       font-size: 14px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -97,9 +95,9 @@
     <div id="step2" class="section">
       <input id="otp" type="tel" inputmode="numeric" pattern="[0-9]*" placeholder="Enter OTP" maxlength="6" />
       <button onclick="verifyOTP()">Verify OTP</button>
-
-      <!-- Back to Log In link -->
-      <span class="link-button" onclick="goBackToLogin()">Back to Log In</span>
+      <div class="link">
+        <a href="https://aoiwbbb.github.io/login/">Back to Log In</a>
+      </div>
     </div>
   </div>
 
@@ -167,9 +165,8 @@
       confirmationResult.confirm(code)
         .then(result => {
           const user = result.user;
-          alert("Login successful!");
+          alert("Sign-up successful!");
 
-          // Send UID and phone to Thunkable
           if (window.ReactNativeWebView) {
             window.ReactNativeWebView.postMessage(JSON.stringify({
               uid: user.uid,
@@ -180,12 +177,6 @@
         .catch(error => {
           alert("Invalid OTP: " + error.message);
         });
-    }
-
-    // Back to Log In handler
-    function goBackToLogin() {
-      // Replace this URL with your actual login page URL
-      window.location.href = "https://aoiwbbb.github.io/login/";
     }
   </script>
 </body>
