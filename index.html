@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Log In</title>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
@@ -80,7 +80,7 @@
     <!-- LOGIN SCREEN -->
     <div id="loginScreen" class="section active">
       <h2>Log In</h2>
-      <input id="loginEmail" type="email" placeholder="Enter your email" />
+      <input id="loginEmail" type="email" placeholder="Enter your email">
       <button onclick="sendLoginLink()">Send Login Link</button>
       <div class="link">
         <a onclick="showSection('recoverScreen')">Don't have access to your registered email?</a>
@@ -93,8 +93,8 @@
     <!-- SIGN UP SCREEN -->
     <div id="signupScreen" class="section">
       <h2>Sign Up</h2>
-      <input id="signupEmail" type="email" placeholder="Enter your email" />
-      <input id="signupPhone" type="tel" inputmode="numeric" pattern="[0-9]*" placeholder="Enter your phone number" />
+      <input id="signupEmail" type="email" placeholder="Enter your email">
+      <input id="signupPhone" type="tel" inputmode="numeric" pattern="[0-9]*" placeholder="Enter your phone number">
       <div id="recaptcha-container-signup"></div>
       <button onclick="sendOTP('signup')">Send OTP</button>
       <div class="link" style="margin-top: 10px;">
@@ -102,7 +102,7 @@
       </div>
 
       <div id="signupOtpSection" style="display:none;">
-        <input id="signupOtp" type="tel" inputmode="numeric" pattern="[0-9]*" placeholder="Enter OTP" maxlength="6" />
+        <input id="signupOtp" type="tel" inputmode="numeric" pattern="[0-9]*" placeholder="Enter OTP" maxlength="6">
         <button onclick="verifyOTP('signup')">Verify OTP</button>
         <div class="link">
           <a id="resendSignupOtp" onclick="resendOTP('signup')" style="display:none;">Resend OTP</a>
@@ -113,12 +113,12 @@
     <!-- RECOVERY SCREEN -->
     <div id="recoverScreen" class="section">
       <h2>Recover Account</h2>
-      <input id="recoverPhone" type="tel" inputmode="numeric" pattern="[0-9]*" placeholder="Enter your registered phone number" />
+      <input id="recoverPhone" type="tel" inputmode="numeric" pattern="[0-9]*" placeholder="Enter your registered phone number">
       <div id="recaptcha-container-recover"></div>
       <button onclick="sendOTP('recover')">Send OTP</button>
 
       <div id="recoverOtpSection" style="display:none;">
-        <input id="recoverOtp" type="tel" inputmode="numeric" pattern="[0-9]*" placeholder="Enter OTP" maxlength="6" />
+        <input id="recoverOtp" type="tel" inputmode="numeric" pattern="[0-9]*" placeholder="Enter OTP" maxlength="6">
         <button onclick="verifyOTP('recover')">Verify OTP</button>
         <div class="link">
           <a id="resendRecoverOtp" onclick="resendOTP('recover')" style="display:none;">Resend OTP</a>
